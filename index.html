@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #place {
+            width: 700px;
+            height: 700px;
+            position: relative;
+            background-color: red;
+            top: 20px;
+            background-image: url("backgorund.jpg"); /* Fixed typo from backgorund.jpg */
+            z-index: 1;
+        }
+        #character {
+            background-image: url("Cheska(resting).gif");
+            width: 100px;
+            height: 120px;
+            background-size: cover;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #event {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+        }
+        #flower {
+            height: 70px;
+            width: 70px;
+            position: absolute;
+            top: 10%;
+            left: 30%;
+        }  
+        #flower img {
+            width: 100%;
+            height: 100%;
+        }
+        #ren {
+            height: 30px;
+            width: 30px;
+            background-color: pink;
+            position: absolute;
+            top: 70%;
+            left: 60%;
+        }
+        #pink {
+            height: 30px;
+            width: 30px;
+            background-color: pink;
+            position: absolute;
+            top: 20%;
+            left: 80%;
+        }
+        #cholo {
+            height: 30px;
+            width: 30px;
+            background-color: pink;
+            position: absolute;
+            top: 50%;
+            left: 10%;
+        }
+        #display {
+            display: none;
+            width: 700px;
+            height: 700px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 255, 149, 0.5);
+            z-index: 3;
+        }
+        #picture {
+            width: 400px;
+            height: 450px;
+            background-size: cover; /* Ensure the image covers the div */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; 
+        }
+        #messageBox {
+            margin: 0;
+            width: 400px;
+            height: 100px;
+            background-color: rgb(236, 229, 225);
+            border: 10px solid pink;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div id="place">
+            <div id="flower">
+                <img src="cake.png" alt="">
+            </div>
+            <div id="character"></div>
+            <h1 id="event"></h1>
+        </div>
+        <div id="display">
+            <div id="picture"></div>
+            <div id="messageBox">
+                <p id="message"></p>
+            </div>
+            <button onclick="buttonContinue()">CONTINUE</button>
+        </div>
+    </center>
+    <script>
+        const character = document.getElementById('character');
+        const flower = document.getElementById('flower');
+        const display = document.getElementById('display');
+        const message = document.getElementById('message');
+        const picture = document.getElementById('picture');
+        const place = document.getElementById('place'); // Added this line
+        const moveAmount = 20;
+
+        function buttonContinue() {
+            display.style.display = 'none';
+        }
+
+        document.addEventListener("keydown", event => {
+            let x = character.offsetLeft;
+            let y = character.offsetTop;
+            event.preventDefault();
+            switch (event.key) {
+                case "ArrowUp":
+                case "w":
+                    y -= moveAmount;
+                    character.style.backgroundImage = "url('Cheska(walking_back).gif')";
+                    break;
+                case "ArrowDown":
+                case "s":
+                    y += moveAmount;
+                    character.style.backgroundImage = "url('Cheska(walking_forward).gif')";
+                    break;
+                case "ArrowLeft":
+                case "a":
+                    x -= moveAmount;
+                    character.style.backgroundImage = "url('Cheska(walking_left).gif')";
+                    break;
+                case "ArrowRight":
+                case "d":
+                    x += moveAmount;
+                    character.style.backgroundImage = "url('Cheska(walking_right).gif')";
+                    break;
+            }
+            if (x >= 0 && y >= 0 && x <= place.offsetWidth - character.offsetWidth && y <= place.offsetHeight - character.offsetHeight) {
+                character.style.top = y + 'px'; // Corrected this line
+                character.style.left = x + 'px'; // Corrected this line
+            }
+            if (x + character.offsetWidth >= flower.offsetLeft && x <= flower.offsetLeft + flower.offsetWidth &&
+                y + character.offsetHeight >= flower.offsetTop && y <= flower.offsetTop + flower.offsetHeight) {
+                
+                display.style.display = 'inline';
+                message.innerHTML = 'Happy birthday, baby! Always remember that every morning, you are the first thing I am grateful for. Thank you for making me happy and for making me feel loved.';
+                picture.style.backgroundImage = "url('cheskaNme.jpg')";
+            }
+        });
+
+        document.addEventListener("keyup", event => {
+            character.style.backgroundImage = "url('Cheska(resting).gif')";
+        });
+    </script>
+</body>
+</html>
